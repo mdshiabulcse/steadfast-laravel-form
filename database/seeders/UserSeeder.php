@@ -33,8 +33,8 @@ class UserSeeder extends Seeder
 
 
         DB::table('user_groups')->insert([
-            ['user_id' => $user, 'user_role' => 1],
-            ['user_id' => $admin, 'user_role' => 2],
+            ['user_id' => $user, 'user_role' => 2],
+            ['user_id' => $admin, 'user_role' => 1],
         ]);
     }
 }

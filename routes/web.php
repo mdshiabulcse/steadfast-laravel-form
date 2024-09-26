@@ -25,6 +25,8 @@ Route::post('/member-registration-store', [App\Http\Controllers\HomeController::
 
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin-dashboard', [App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin-dashboard');
+    Route::post('/category-store', [App\Http\Controllers\AdminController::class, 'categoryStore'])->name('category-store');
+    Route::post('/organizer-store', [App\Http\Controllers\AdminController::class, 'organizerStore'])->name('organizer-store');
 });
 
 

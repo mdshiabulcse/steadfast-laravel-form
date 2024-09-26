@@ -26,6 +26,7 @@ class CreateEventMemberRegistrationsTable extends Migration
             $table->string('payment_transaction_id')->nullable();
             $table->string('payment_method')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('user_id');
             $table->timestamps();
         });
     }
