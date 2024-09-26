@@ -38,6 +38,21 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Category save Successfully');
     }
 
+    public function categoryUpdate(Request $request,$id)
+    {
+        $request->validate([
+            'category_name' => 'required|unique:categories,name|string|max:255',
+            'category_status' => 'required',
+        ]);
+
+        $saveData = Category::find($id);
+        $saveData->name = $request->category_name;
+        $saveData->description = $request->category_description;
+        $saveData->status = $request->category_status ?? 0;
+        $saveData->save();
+        return redirect()->back()->with('success', 'Category save Successfully');
+    }
+
 
     public function organizerStore(Request $request)
     {
@@ -47,6 +62,21 @@ class AdminController extends Controller
         ]);
 
         $saveData = new Organization();
+        $saveData->name = $request->category_name;
+        $saveData->description = $request->organizer_description;
+        $saveData->status = $request->organizer_status ?? 0;
+        $saveData->save();
+        return redirect()->back()->with('success', 'Category save Successfully');
+    }
+
+    public function organizerUpdate(Request $request,$id)
+    {
+        $request->validate([
+            'organizer_name' => 'required|unique:organizations,name|string|max:255',
+            'organizer_status' => 'required',
+        ]);
+
+        $saveData = Organization::find($id);
         $saveData->name = $request->category_name;
         $saveData->description = $request->organizer_description;
         $saveData->status = $request->organizer_status ?? 0;
