@@ -23,4 +23,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/event-member-form', [App\Http\Controllers\HomeController::class, 'eventMemberFormRegistration'])->name('eventMemberFormRegistration');
 Route::post('/member-registration-store', [App\Http\Controllers\HomeController::class, 'eventMemberFormRegistrationStore'])->name('member-registration-store');
 
+Route::middleware(['auth','role:admin'])->group(function () {
+    Route::get('/admin-dashboard', [App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin-dashboard');
+});
+
 

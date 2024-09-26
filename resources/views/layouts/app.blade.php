@@ -30,7 +30,7 @@
                 </a>
                 @else
                     @if (Auth::check() && Auth::user()->existRole('admin'))
-                        <a class="btn btn-warning" href="#" role="button">Category</a>
+                        <a class="btn btn-warning" href="{{route('admin-dashboard')}}" role="button">Category</a>
                     @endif
                 <a class="btn btn-primary" href="{{route('eventMemberFormRegistration')}}" role="button">Member Registration</a>
                 @endguest

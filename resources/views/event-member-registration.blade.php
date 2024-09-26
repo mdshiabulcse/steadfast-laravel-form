@@ -24,8 +24,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+
                                 @forelse($registerMember as $member)
+                                    <tr>
                                     <th scope="row">{{$loop->iteration }}</th>
                                     <td>{{$member->first_name}}</td>
                                     <td>{{$member->last_name}}</td>
@@ -42,19 +43,15 @@
                                             <label class="btn btn-secondary active">
                                                 <a type="radio" name="options" id="option1"> View</a>
                                             </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options" > Edit</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options" > Delete </a>
-                                            </label>
                                         </div>
                                     </td>
+                                    </tr>
                                 @empty
-                                    <p>No Data found.</p>
+                                    <tr>
+                                        <td>No data found</td>
+                                    </tr>
                                 @endforelse
 
-                            </tr>
                             </tbody>
                         </table>
 
@@ -142,7 +139,7 @@
                                             <div class="col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <p class="form-label">Member Category</p>
-                                                    <select name="member_category_id" class="form-select" aria-label="Default select example">
+                                                    <select name="organizer_id" class="form-select" aria-label="Default select example">
                                                         <option selected disabled>Select Organizer</option>
                                                         @foreach($organizer as $value)
                                                             <option value="{{$value['id']}}">{{$value['name']}}</option>

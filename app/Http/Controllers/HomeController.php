@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\EventMemberRegistration;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -31,9 +32,14 @@ class HomeController extends Controller
 
 
     public function eventMemberFormRegistration(){
+        $user_id = Auth::user()->id;
+        $member=EventMemberRegistration::query();
+        if (!Auth::check() || (Auth::check() && !Auth::user()->existRole('admin'))) {
+            $member->where('user_id', $user_id);
+        }
+        $data['registerMember']=$member->with(['organizer','category'])->get();
         $data['category']=Category::where('status',1)->get();
         $data['organizer']=Organization::where('status',1)->get();
-        $data['registerMember']=EventMemberRegistration::where('status',1)->with(['category','organizer'])->get();
         return view('event-member-registration',$data);
     }
 
@@ -55,8 +61,10 @@ class HomeController extends Controller
         $saveData->email=$request->email;
         $saveData->address=$request->address;
         $saveData->member_category_id=$request->member_category_id;
+        $saveData->organizer_id=$request->organizer_id;
         $saveData->payment_transaction_id=$request->payment_transaction_id ?? null;
         $saveData->payment_method=$request->payment_method ?? null;
+        $saveData->user_id=Auth::user()->id;
         $saveData->save();
 
 
