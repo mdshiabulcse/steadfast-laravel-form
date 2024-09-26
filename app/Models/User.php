@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Couchbase\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,4 +42,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function userRole()
+    {
+        return $this->belongsToMany(UserRole::class,'user_groups','user_id','user_role');
+    }
+
+    public function existRole($roleName){
+        return $this->userRole()->where('role',$roleName)->exists();
+    }
 }
