@@ -22,6 +22,7 @@ class CreateEventMemberRegistrationsTable extends Migration
             $table->string('email');
             $table->string('address')->nullable();
             $table->integer('member_category_id');
+            $table->integer('organizer_id')->nullable();
             $table->string('payment_transaction_id')->nullable();
             $table->string('payment_method')->nullable();
             $table->tinyInteger('status')->default(1);

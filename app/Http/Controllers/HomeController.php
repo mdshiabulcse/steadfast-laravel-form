@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\EventMemberRegistration;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,6 +32,8 @@ class HomeController extends Controller
 
     public function eventMemberFormRegistration(){
         $data['category']=Category::where('status',1)->get();
+        $data['organizer']=Organization::where('status',1)->get();
+        $data['registerMember']=EventMemberRegistration::where('status',1)->with(['category','organizer'])->get();
         return view('event-member-registration',$data);
     }
 

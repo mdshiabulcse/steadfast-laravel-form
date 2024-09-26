@@ -3,6 +3,65 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Organization</th>
+                                <th scope="col">Transaction</th>
+                                <th scope="col">Method</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                @forelse($registerMember as $member)
+                                    <th scope="row">{{$loop->iteration }}</th>
+                                    <td>{{$member->first_name}}</td>
+                                    <td>{{$member->last_name}}</td>
+                                    <td>{{$member->dob}}</td>
+                                    <td>{{$member->gender}}</td>
+                                    <td>{{$member->email}}</td>
+                                    <td>{{$member->address}}</td>
+                                    <td>{{$member->category->name}}</td>
+                                    <td>{{@$member->organizer->name}}</td>
+                                    <td>{{$member->payment_transaction_id}}</td>
+                                    <td>{{$member->payment_method}}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary active">
+                                                <a type="radio" name="options" id="option1"> View</a>
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <a type="radio" name="options" > Edit</a>
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <a type="radio" name="options" > Delete </a>
+                                            </label>
+                                        </div>
+                                    </td>
+                                @empty
+                                    <p>No Data found.</p>
+                                @endforelse
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <br><br>
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
@@ -11,38 +70,6 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
-                        <div class="container">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
                             <div class="register-area">
                                 <div class="container">
 
@@ -112,6 +139,18 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <p class="form-label">Member Category</p>
+                                                    <select name="member_category_id" class="form-select" aria-label="Default select example">
+                                                        <option selected disabled>Select Organizer</option>
+                                                        @foreach($organizer as $value)
+                                                            <option value="{{$value['id']}}">{{$value['name']}}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+                                            </div>
 
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="form-group">
@@ -136,11 +175,13 @@
                                         </div>
                                     </form>
                                 </div>
+
                             </div>
 
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
