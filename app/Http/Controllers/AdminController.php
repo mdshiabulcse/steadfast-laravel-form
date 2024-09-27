@@ -25,62 +25,93 @@ class AdminController extends Controller
 
     public function categoryStore(Request $request)
     {
-        $request->validate([
+        $validation = $request->validate([
             'category_name' => 'required|unique:categories,name|string|max:255',
             'category_status' => 'required',
         ]);
 
-        $saveData = new Category();
-        $saveData->name = $request->category_name;
-        $saveData->description = $request->category_description;
-        $saveData->status = $request->category_status ?? 0;
-        $saveData->save();
-        return redirect()->back()->with('success', 'Category save Successfully');
+        try {
+
+            $saveData = new Category();
+            $saveData->name = $validation['category_name'];
+            $saveData->description = $request->category_description;
+            $saveData->status = $validation['category_status'];
+            $saveData->save();
+            return response()->json(['message' => 'Category added successfully!']);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()]);
+        }
+
     }
 
-    public function categoryUpdate(Request $request,$id)
+    public function categoryShow($id)
     {
-        $request->validate([
-            'category_name' => 'required|unique:categories,name|string|max:255',
+        $data = Category::find($id);
+        return response()->json(['data' => $data]);
+    }
+
+    public function categoryUpdate(Request $request, $id)
+    {
+        $validation = $request->validate([
             'category_status' => 'required',
         ]);
 
-        $saveData = Category::find($id);
-        $saveData->name = $request->category_name;
-        $saveData->description = $request->category_description;
-        $saveData->status = $request->category_status ?? 0;
-        $saveData->save();
-        return redirect()->back()->with('success', 'Category save Successfully');
+        try {
+            $saveData = Category::find($id);
+            $saveData->name = $request->category_name;
+            $saveData->description = $request->category_description;
+            $saveData->status = $validation['category_status'];
+            $saveData->save();
+            return response()->json(['message' => 'Category update successfully!']);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()]);
+        }
     }
 
 
     public function organizerStore(Request $request)
     {
-        $request->validate([
-            'organizer_name' => 'required|unique:organizations,name|string|max:255',
+
+        $validation = $request->validate([
+            'organizer_name' => 'required|unique:categories,name|string|max:255',
             'organizer_status' => 'required',
         ]);
 
-        $saveData = new Organization();
-        $saveData->name = $request->category_name;
-        $saveData->description = $request->organizer_description;
-        $saveData->status = $request->organizer_status ?? 0;
-        $saveData->save();
-        return redirect()->back()->with('success', 'Category save Successfully');
+        try {
+
+            $saveData = new Organization();
+            $saveData->name = $validation['organizer_name'];
+            $saveData->description = $request->organizer_description;
+            $saveData->status = $validation['organizer_status'];
+            $saveData->save();
+            return response()->json(['message' => 'Organizer added successfully!']);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()]);
+        }
+
     }
 
-    public function organizerUpdate(Request $request,$id)
+    public function organizerShow($id)
     {
-        $request->validate([
-            'organizer_name' => 'required|unique:organizations,name|string|max:255',
+        $data = Organization::find($id);
+        return response()->json(['data' => $data]);
+    }
+
+    public function organizerUpdate(Request $request, $id)
+    {
+        $validation = $request->validate([
             'organizer_status' => 'required',
         ]);
 
-        $saveData = Organization::find($id);
-        $saveData->name = $request->category_name;
-        $saveData->description = $request->organizer_description;
-        $saveData->status = $request->organizer_status ?? 0;
-        $saveData->save();
-        return redirect()->back()->with('success', 'Category save Successfully');
+        try {
+            $saveData = Organization::find($id);
+            $saveData->name = $request->organizer_name;
+            $saveData->description = $request->organizer_description;
+            $saveData->status = $validation['organizer_status'];
+            $saveData->save();
+            return response()->json(['message' => 'Organizer update successfully!']);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()]);
+        }
     }
 }

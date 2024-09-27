@@ -11,6 +11,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+    <script src="{{asset('assets/js/select2.min.js')}}"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,6 +23,29 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .toast {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .toast-success {
+            background-color: #28a745 !important;
+        }
+
+        .toast-error {
+            background-color: #dc3545 !important;
+        }
+
+        .toast-info {
+            background-color: #17a2b8 !important;
+        }
+
+        .toast-warning {
+            background-color: #ffc107 !important;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -87,11 +114,7 @@
             @yield('content')
         </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
-
     <script>
-        "use strict";
         toastr.options = {
             positionClass: 'toast-bottom-right',
             closeButton: true,
@@ -118,27 +141,6 @@
         @endforeach
         @endif
     </script>
-    <style>
-        .toast {
-            background-color: #333 !important;
-            color: #fff !important;
-        }
 
-        .toast-success {
-            background-color: #28a745 !important;
-        }
-
-        .toast-error {
-            background-color: #dc3545 !important;
-        }
-
-        .toast-info {
-            background-color: #17a2b8 !important;
-        }
-
-        .toast-warning {
-            background-color: #ffc107 !important;
-        }
-    </style>
 </body>
 </html>

@@ -40,15 +40,7 @@
                                     <td>{{$member->payment_method}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <a type="radio" name="options" id="option1"> View</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options"> Edit</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options"> Delete </a>
-                                            </label>
+                                            <button class="btn btn-secondary">Share Url</button>
                                         </div>
                                     </td>
                                 <tr>
@@ -69,10 +61,10 @@
                     <div class="card-body">
                         <div class="register-area">
                             <div class="container">
-                                <form id="memberCategoryForm" class="register-form-area" method="POST"
-                                      action="{{route('category-store')}}">
+                                <form id="memberCategoryForm" class="register-form-area">
                                     @csrf
                                     <h3 class="event-name">Category</h3>
+                                    <input type="hidden" value="" id="category_id" name="category_id">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 col-12">
                                             <div class="form-group">
@@ -102,7 +94,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12 col-12 mt-3">
-                                            <button class="btn btn-primary" type="submit">Save</button>
+                                            <button class="btn btn-primary" id="saveButton">Save</button>
                                         </div>
                                     </div>
                                 </form>
@@ -137,15 +129,9 @@
                                     <td>{{$catValue->status == 1 ? 'Active':'Inactive'}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <a type="radio" name="options" id="option1"> View</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options"> Edit</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options"> Delete </a>
-                                            </label>
+                                            <button class="btn btn-secondary"
+                                                    onclick="editMemberCategory({{$catValue->id}})"> Edit
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -164,10 +150,10 @@
                     <div class="card-body">
                         <div class="register-area">
                             <div class="container">
-                                <form id="register-form" class="register-form-area" method="POST"
-                                      action="{{route('organizer-store')}}">
+                                <form id="memberOrganizerForm" class="register-form-area">
                                     @csrf
                                     <h3 class="event-name">Organizer</h3>
+                                    <input type="hidden" value="" id="organizer_id" name="organizer_id">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12 col-12">
                                             <div class="form-group">
@@ -199,7 +185,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12 col-12 mt-3">
-                                            <button class="btn btn-primary" type="submit">Save</button>
+                                            <button class="btn btn-primary" id="saveOrganizer">Save</button>
                                         </div>
                                     </div>
                                 </form>
@@ -234,15 +220,9 @@
                                     <td>{{$orgValue->status == 1 ? 'Active':'Inactive'}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <a type="radio" name="options" id="option1"> View</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options"> Edit</a>
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <a type="radio" name="options"> Delete </a>
-                                            </label>
+                                            <button onclick="editMemberOrganizer({{$orgValue->id}})"
+                                                    class="btn btn-secondary"> Edit
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -260,4 +240,108 @@
 
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#saveOrganizer').on('click', function (e) {
+                e.preventDefault();
+                let formData = $('#memberOrganizerForm').serialize();
+                let url;
+                let method;
+                let organizerId = $('#organizer_id').val();
+                if (organizerId) {
+                    url = '{{route('organizer-update',':id')}}'.replace(':id', organizerId),
+                        method = 'PUT'
+                } else {
+                    url = "{{route('organizer-store')}}";
+                    method = 'POST';
+                }
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: formData,
+                    success: function (response) {
+                        toastr.success(response.message);
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            Object.values(xhr.responseJSON.errors).forEach(function (error) {
+                                toastr.error(error[0]);
+                            })
+                        } else {
+                            toastr.error('Something went wrong!');
+                        }
+
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $('#saveButton').on('click', function (e) {
+                e.preventDefault();
+                let formData = $('#memberCategoryForm').serialize();
+                let url;
+                let method;
+                let categoryId = $('#category_id').val();
+                if (categoryId) {
+                    url = '{{route('category-update',':id')}}'.replace(':id', categoryId),
+                        method = 'PUT'
+                } else {
+                    url = "{{route('category-store')}}";
+                    method = 'POST';
+                }
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: formData,
+                    success: function (response) {
+                        toastr.success(response.message);
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            Object.values(xhr.responseJSON.errors).forEach(function (error) {
+                                toastr.error(error[0]);
+                            })
+                        } else {
+                            toastr.error('Something went wrong!');
+                        }
+
+                    }
+                })
+            })
+
+        })
+
+
+        function editMemberCategory(id) {
+            console.log(id)
+            $.ajax({
+                url: "/category-show/" + id,
+                type: 'GET',
+                success: function (response) {
+                    let data = response.data;
+                    $('#category_id').val(data.id);
+                    $('#category_name').val(data.name);
+                    $('#category_description').val(data.description);
+                    $('#category_status').val(data.status);
+                }
+            })
+        }
+
+        function editMemberOrganizer(id) {
+            console.log(id)
+            $.ajax({
+                url: "/organizer-show/" + id,
+                type: 'GET',
+                success: function (response) {
+                    let data = response.data;
+                    $('#organizer_id').val(data.id);
+                    $('#organizer_name').val(data.name);
+                    $('#organizer_description').val(data.description);
+                    $('#organizer_status').val(data.status);
+                }
+            })
+        }
+    </script>
 @endsection
