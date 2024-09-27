@@ -23,6 +23,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/event-member-form', [App\Http\Controllers\HomeController::class, 'eventMemberFormRegistration'])->name('eventMemberFormRegistration');
 Route::post('/member-registration-store', [App\Http\Controllers\HomeController::class, 'eventMemberFormRegistrationStore'])->name('member-registration-store');
 
+Route::post('/short-url-store', [App\Http\Controllers\HomeController::class, 'shortUrlStore'])->name('short-url-store');
+Route::get('/{shortUrl}', [App\Http\Controllers\HomeController::class, 'redirectToUrl']);
+
+
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin-dashboard', [App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin-dashboard');
     Route::post('/category-store', [App\Http\Controllers\AdminController::class, 'categoryStore'])->name('category-store');
@@ -33,4 +37,5 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::put('/organizer-update/{id}', [App\Http\Controllers\AdminController::class, 'organizerUpdate'])->name('organizer-update');
 });
 
+Route::get('/member-profile/{memberId}/{memberName}', [App\Http\Controllers\PublicController::class, 'memberProfile'])->name('member-profile');
 

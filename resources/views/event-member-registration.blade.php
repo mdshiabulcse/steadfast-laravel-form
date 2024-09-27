@@ -40,9 +40,7 @@
                                     <td>{{$member->payment_method}}</td>
                                     <td>
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <a type="radio" name="options" id="option1"> View</a>
-                                            </label>
+                                                <a class="btn btn-warning" href="{{route('member-profile',['memberId' => $member->id, 'memberName' => $member->first_name])}}"> View</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -189,6 +187,68 @@
                             </div>
 
                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        <div class="register-area">
+                            <div class="container">
+
+                                <form action="{{route('short-url-store')}}" method="POST">
+                                    @csrf
+                                    <div class="col-lg-12 col-sm-12 col-12 mt-3 form-group">
+                                        <label for="original_url">Original URL</label>
+                                        <input type="url" class="form-control" name="original_url" required>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12 col-12 mt-3">
+                                        <button class="btn btn-primary" type="submit">SHORT URL</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Orginal URL</th>
+                                <th scope="col">Short url</th>
+                                <th scope="col">Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @forelse($urlList as $urlValue)
+                                <tr>
+                                <tr>
+                                    <td>{{ $urlValue->original_url }}</td>
+                                    <td><a href="{{ url($urlValue->short_url) }}">{{ url($urlValue->short_url) }}</a></td>
+                                    <td>{{ $urlValue->click_count }}</td>
+                                </tr>
+
+                            @empty
+                                <tr>
+                                    <td>No data found</td>
+                                </tr>
+                            @endforelse
+
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
