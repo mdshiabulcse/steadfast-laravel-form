@@ -29,7 +29,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user_id = Auth::user()->id;
+        $member = EventMemberRegistration::query();
+        if (!Auth::check() || (Auth::check() && !Auth::user()->existRole('admin'))) {
+            $member->where('user_id', $user_id);
+        }
+        $data['registerMember'] = $member->with(['organizer', 'category'])->get();
+        $data['category'] = Category::where('status', 1)->get();
+        $data['organizer'] = Organization::where('status', 1)->get();
+        $data['urlList'] = UrlShort::all();
+
+        return view('home',$data);
     }
 
 

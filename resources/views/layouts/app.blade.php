@@ -55,9 +55,11 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+
                 @else
+                    <a class="btn btn-success" href="{{route('home')}}" role="button">Home</a>
                     @if (Auth::check() && Auth::user()->existRole('admin'))
-                        <a class="btn btn-warning" href="{{route('admin-dashboard')}}" role="button">Category</a>
+                        <a class="btn btn-warning" href="{{route('adminDashboard')}}" role="button">Category</a>
                     @endif
                 <a class="btn btn-primary" href="{{route('eventMemberFormRegistration')}}" role="button">Member Registration</a>
                 @endguest

@@ -66,6 +66,38 @@
                         </div>
                     </form>
                 </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <th scope="col">Role</th>
+                            <td scope="col">Admin</td>
+                            <th scope="col">Email</th>
+                            <td scope="col">administrative@mail.com</td>
+                            <th scope="col">Password</th>
+                            <td>12345678</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Role</th>
+                            <td scope="col">User</td>
+                            <th scope="col">Email</th>
+                            <td scope="col">user@mail.com</td>
+                            <th scope="col">Password</th>
+                            <td>12345678</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
