@@ -99,7 +99,8 @@ class HomeController extends Controller
     {
         $urlSort = UrlShort::where('short_url', $shortUrl)->firstOrFail();
         $urlSort->increment('count_click');
-        return redirect($urlSort->orginal_url);
+        return redirect()->to($urlSort->original_url);
+
     }
 
 

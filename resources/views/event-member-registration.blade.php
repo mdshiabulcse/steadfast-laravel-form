@@ -203,6 +203,7 @@
                             <div class="container">
 
                                 <form action="{{route('short-url-store')}}" method="POST">
+                                    <h3 class="event-name">URL List</h3>
                                     @csrf
                                     <div class="col-lg-12 col-sm-12 col-12 mt-3 form-group">
                                         <label for="original_url">Original URL</label>
@@ -225,7 +226,6 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Orginal URL</th>
                                 <th scope="col">Short url</th>
                                 <th scope="col">Count</th>
@@ -238,7 +238,7 @@
                                 <tr>
                                     <td>{{ $urlValue->original_url }}</td>
                                     <td><a href="{{ url($urlValue->short_url) }}">{{ url($urlValue->short_url) }}</a></td>
-                                    <td>{{ $urlValue->click_count }}</td>
+                                    <td>{{ $urlValue->count_click }}</td>
                                 </tr>
 
                             @empty
